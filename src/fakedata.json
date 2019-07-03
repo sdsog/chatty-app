@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "type": "incomingNotification",
+    "username": "Bob",
+    "content": "Has anyone seen my marbles?"
+  },
+  {
+    "id": 2,
+    "type": "incomingNotification",
+    "username": "seasom1",
+    "content": "No I think you lost your marbles Bob. You lost them for good!"
+  }
+]

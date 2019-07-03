@@ -12,7 +12,8 @@ body {
   width: 400px;
   position: relative;
   background-color: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-right: 1px solid black;
   border-left: 1px solid black;
 }
@@ -29,10 +30,10 @@ header {
 
 main {
   padding-top: 100px;
+}
 
-  .username {
-    font-weight: bold;
-  }
+main .username {
+  font-weight: bold;
 }
 
 footer {
@@ -44,3 +45,4 @@ footer {
   padding: 20px 5px 10px 5px;
   border-top: 1px solid black;
 }
+/*# sourceMappingURL=home.css.map */
