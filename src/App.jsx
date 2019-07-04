@@ -1,56 +1,55 @@
-import React, { Component } from "react";
-import ChatBar from "./components/ChatBar.jsx";
-import MessageList from "./components/MessageList.jsx";
-import Header from "./components/Header.jsx";
-import Messages from "./fakedata.json";
+import React, { Component } from 'react';
+import ChatBar from './components/ChatBar.jsx';
+import MessageList from './components/MessageList.jsx';
+import Header from './components/Header.jsx';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      messages: Messages,
-      loading: true,
-      currentUser: { name: "Bob" },
+      messages: [],
+      currentUser: { name: 'Bob' },
       online: 0,
     };
+
     this.onNewPost = this.onNewPost.bind(this);
+    this.onNameChange = this.onNameChange.bind(this);
   }
 
   componentDidMount() {
-    console.log("componentDidMount <App />");
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      // Add a new message to the list of messages in the data store
-      const newMessage = {
-        id: 3,
-        username: "Michelle",
-        content: "Hello there!",
-      };
-      const messages = this.state.messages.concat(newMessage);
-      // Update the state of the app component.
-      // Calling setState will trigger a call to render() in App and all child components.
-      this.setState({ messages: messages });
-    }, 3000);
+    console.log('componentDidMount <App />');
+    this.socket = new WebSocket('ws://localhost:3001');
+
+    this.socket.onopen = event => {
+      console.log('Connected to server');
+    };
+
+    this.socket.onmessage = event => {
+      const receivedMessage = JSON.parse(event.data);
+      if ((receivedMessage.type = 'onlineStatus')) {
+        this.setState({ online: Number(receivedMessage.status) });
+      }
+      const newMessage = this.state.messages.concat(receivedMessage);
+      this.setState({ messages: newMessage });
+    };
   }
 
   onNewPost(newMessage) {
-    console.log("this is message", newMessage);
-    const message = this.state.messages.concat(newMessage);
-    this.setState({ messages: message });
+    this.socket.send(JSON.stringify(newMessage));
+  }
+
+  onNameChange(newName) {
+    this.socket.send(JSON.stringify(newName));
   }
 
   render() {
-    // if (this.state.loading) {
-    //   return <h1>Loading...</h1>;
-    // } else {
     return (
       <div>
-        <Header />
+        <Header online={this.state.online} />
         <MessageList messages={this.state.messages} />
-        <ChatBar onNewPost={this.onNewPost} />
+        <ChatBar onNewPost={this.onNewPost} onNameChange={this.onNameChange} />
       </div>
     );
-    // }
   }
 }
 

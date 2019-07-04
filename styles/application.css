@@ -1,0 +1,48 @@
+html,
+body {
+  height: 100%;
+  background-color: lightgrey;
+}
+
+.container {
+  min-height: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  width: 400px;
+  position: relative;
+  background-color: white;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  background-color: tomato;
+  padding: 1%;
+  border-bottom: 1px solid black;
+}
+
+main {
+  padding-top: 100px;
+}
+
+main .username {
+  font-weight: bold;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: tomato;
+  overflow: hidden;
+  padding: 20px 5px 10px 5px;
+  border-top: 1px solid black;
+}
+/*# sourceMappingURL=application.css.map */
