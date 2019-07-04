@@ -1,8 +1,8 @@
 // server.js
 
 const express = require('express');
-const SocketServer = require('ws').Server;
 const WebSocket = require('ws');
+const SocketServer = require('ws').Server;
 const uuidv1 = require('uuid/v1');
 
 // Set the port to 3001
@@ -22,6 +22,7 @@ const wss = new SocketServer({ server });
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
+
 wss.on('connection', socket => {
   wss.broadcast = function broadcast(data) {
     wss.clients.forEach(function each(client) {
@@ -30,13 +31,10 @@ wss.on('connection', socket => {
       }
     });
   };
-
+  
   socket.on('message', function incoming(message) {
-    // take incoming message 
     const incomingMessage = JSON.parse(message);
-   
     if ((incomingMessage.type = 'postMessage')) {
-      // assigns uuidv1 to message
       incomingMessage.id = uuidv1();
       incomingMessage.type = 'incomingMessage';
       wss.broadcast(JSON.stringify(incomingMessage));
@@ -44,7 +42,7 @@ wss.on('connection', socket => {
         JSON.stringify({
           id: uuidv1(),
           type: 'onlineStatus',
-          status: wss.clients.size,
+          status: wss.clients.size
         })
       );
     } else {
@@ -54,20 +52,19 @@ wss.on('connection', socket => {
         JSON.stringify({
           id: uuidv1(),
           type: 'onlineStatus',
-          status: wss.clients.size,
+          status: wss.clients.size
         })
       );
     }
   });
-  // When a new client connects, status is updated 
+
   wss.broadcast(
     JSON.stringify({
       id: uuidv1(),
       type: 'onlineStatus',
-      status: wss.clients.size,
+      status: wss.clients.size
     })
   );
 
-  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   socket.on('close', () => console.log('Client disconnected'));
 });

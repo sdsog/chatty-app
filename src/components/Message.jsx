@@ -1,28 +1,35 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Message extends Component {
-  render() {
-    // const messages = this.props.messages.map(message => {
-    //   return (
-    //     <Message
-    //       key={messages.id}
-    //       type={messages.type}
-    //       content={messages.content}
-    //       username={messages.username}
-    //     />
-    //   );
-    // });
+  constructor(props) {
+    super(props);
+  }
 
-    return (
-      <div className="row w-100">
-        <div className="col-4">
-          <p className="username">{this.props.username}</p>
+
+  
+
+  render() {
+    if (this.props.username) {
+      return (
+        <div>
+          <div className='row message-rows'>
+            <div className='col username-col'>
+              <p className='username align-middle'>
+                <span className='username-style'>{this.props.username}</span>{" "}
+                JUST SAID:
+              </p>
+            </div>
+          </div>
+          <div className='row message-rows'>
+            <div className='col message-col'>
+              <p className='message align-middle'>"{this.props.content}"</p>
+            </div>
+          </div>
         </div>
-        <div className="col-8">
-          <p className="message">{this.props.content}</p>
-        </div>
-      </div>
-    );
+      );
+    } else {
+      return <div className='message system'> {this.props.content}</div>;
+    }
   }
 }
 

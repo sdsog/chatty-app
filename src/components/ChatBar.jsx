@@ -1,32 +1,42 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class ChatBar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      message: '',
-      user: '',
-      previous_user: ''
+      message: "",
+      user: "",
+      previous_user: ""
     };
 
     this.onPost = this.onPost.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
+    this.onUsername = this.onUsername.bind(this);
   }
 
-  onPost(event) {
-    // when user presses enter
-    if (event.key === 'Enter') {
-      // message created and value sent to App.jsx
-      this.setState({ message: event.target.value }, function() {
-        this.props.onNewPost({
-          type: 'postMessage',
-          username: this.state.user || 'Anonymous',
-          content: this.state.message
+  componentDidMount() {
+    this.setState({
+      user: this.props.user,
+      previous_user: this.props.user
+    });
+  }
+
+  onUsername(event) {
+    this.setState({ previous_user: this.state.user });
+    if (this.state.previous_user !== event.target.value) {
+      this.setState({ user: event.target.value }, function() {
+        this.props.onNameChange({
+          type: "postNotification",
+          content:
+            '! "' +
+            this.state.previous_user +
+            '" changed their username to "' +
+            this.state.user +
+            '" !'
         });
+        this.setState({ previous_user: this.state.user });
       });
-      // resets message box to blank string
-      event.target.value = '';
     }
   }
 
@@ -35,22 +45,40 @@ class ChatBar extends Component {
     this.setState({ previous_user: this.state.user });
     //checks to see if previous user does not equal the new name
     if (
-      event.key === 'Enter' &&
+      event.key === "Enter" &&
       this.state.previous_user !== event.target.value
     ) {
       //if previous user is unique
       this.setState({ user: event.target.value }, function() {
         // sends notification MessageList
         this.props.onNameChange({
-          type: 'postNotification',
+          type: "postNotification",
           content:
+            '! "' +
             this.state.previous_user +
-            ' changed their name to ' +
-            this.state.user
+            '" changed their username to "' +
+            this.state.user +
+            '" !'
         });
         // sets previous user to new user value to prevent multiple changes of same value
         this.setState({ previous_user: this.state.user });
       });
+    }
+  }
+
+  onPost(event) {
+    // when user presses enter
+    if (event.key === "Enter") {
+      // message created and value sent to App.jsx
+      this.setState({ message: event.target.value }, function() {
+        this.props.onNewPost({
+          type: "postMessage",
+          username: this.state.user || "Anonymous",
+          content: this.state.message
+        });
+      });
+      // resets message box to blank string
+      event.target.value = "";
     }
   }
 
@@ -71,8 +99,10 @@ class ChatBar extends Component {
               className='name-box form-control'
               onBlur={this.onUsername}
               onKeyPress={this.onNameChange}
-              defaultValue={this.props.user}
             />
+            <p className='change-name'>
+              &uarr; Update your username here &uarr;
+            </p>
           </div>
         </div>
       </footer>

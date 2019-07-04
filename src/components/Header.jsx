@@ -6,8 +6,13 @@ class Header extends Component {
     return (
       <header className='row m-0'>
         <div className='col'>
-          <h1>Chatty</h1>
-          <span className='navbar-online'>{online} users online</span>
+          <h1>Chatty!</h1>
+          <div className='header-online'>
+            <p>
+              *** <span className='large-number'>{online}</span> users online
+              ***
+            </p>
+          </div>
         </div>
       </header>
     );

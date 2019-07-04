@@ -4,12 +4,13 @@ import MessageList from './components/MessageList.jsx';
 import Header from './components/Header.jsx';
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
+      currentUser: { name: 'Anonymous' },
       messages: [],
-      currentUser: { name: 'Bob' },
-      online: 0,
+      online: 0
     };
 
     this.onNewPost = this.onNewPost.bind(this);
@@ -17,13 +18,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount <App />');
     this.socket = new WebSocket('ws://localhost:3001');
-
-    this.socket.onopen = event => {
-      console.log('Connected to server');
-    };
-
     this.socket.onmessage = event => {
       const receivedMessage = JSON.parse(event.data);
       if ((receivedMessage.type = 'onlineStatus')) {
@@ -34,12 +29,12 @@ class App extends Component {
     };
   }
 
-  onNewPost(newMessage) {
-    this.socket.send(JSON.stringify(newMessage));
+  onNewPost(content) {
+    this.socket.send(JSON.stringify(content));
   }
 
-  onNameChange(newName) {
-    this.socket.send(JSON.stringify(newName));
+  onNameChange(content) {
+    this.socket.send(JSON.stringify(content));
   }
 
   render() {
@@ -47,10 +42,13 @@ class App extends Component {
       <div>
         <Header online={this.state.online} />
         <MessageList messages={this.state.messages} />
-        <ChatBar onNewPost={this.onNewPost} onNameChange={this.onNameChange} />
+        <ChatBar
+          user={this.state.currentUser.name}
+          onNewPost={this.onNewPost}
+          onNameChange={this.onNameChange}
+        />
       </div>
     );
   }
 }
-
 export default App;

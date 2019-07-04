@@ -2,21 +2,37 @@ import React, { Component } from 'react';
 import Message from './Message.jsx';
 
 class MessageList extends Component {
-  render() {
-    const messages = this.props.messages.map(message => {
-      
-      return (
-        <Message
-          type={message.type}
-          key={message.id}
-          username={message.username}
-          content={message.content}
-        />
-      );
-    });
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
+  }
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
 
-    return <main className="row message-list m-0">{messages}</main>;
+  render() {
+    const allMessages = this.props.messages.map(function(messages, i) {
+      if ((messages.type = 'incomingMessage')) {
+        return (
+          <Message
+            username={messages.username}
+            content={messages.content}
+            key={messages.id}
+          />
+        );
+      } else {
+        return <Message content={messages.content} key={i} />;
+      }
+    });
+    return (
+      <main className='messages'>
+        <div id='message-list'>{allMessages}</div>
+        <div
+          ref={el => {
+            this.messagesEnd = el;
+          }}
+        />
+      </main>
+    );
   }
 }
-
 export default MessageList;
