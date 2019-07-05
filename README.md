@@ -6,7 +6,7 @@ Chatty App is a web-based chat SPA (Single Page Application) Slack clone built w
 
 ## Screenshots
 
-![Homepage](/screenshot/screenshot.png)
+![Homepage](/screenshot/screenshot.jpg)
 
 ## Getting Started
 
