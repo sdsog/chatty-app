@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ChatBar from './components/ChatBar.jsx';
 import MessageList from './components/MessageList.jsx';
 import Header from './components/Header.jsx';
+const randomColor = require('randomcolor');
 
 class App extends Component {
   constructor(props) {
@@ -9,23 +10,22 @@ class App extends Component {
 
     this.state = {
       currentUser: { name: 'Anonymous' },
+      userColor: { color: randomColor() },
       messages: [],
       online: 0
     };
 
     this.onNewPost = this.onNewPost.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
-
   }
 
-  
   componentDidMount() {
     //When APP mounts, creates new WebSocket connectio
     this.socket = new WebSocket('ws://localhost:3001');
     //handles incoming messages
     this.socket.onmessage = event => {
       const receivedMessage = JSON.parse(event.data);
-      //updates online count for connected users 
+      //updates online count for connected users
       if ((receivedMessage.type = 'onlineStatus')) {
         this.setState({ online: Number(receivedMessage.status) });
       }
@@ -49,7 +49,10 @@ class App extends Component {
     return (
       <div>
         <Header online={this.state.online} />
-        <MessageList messages={this.state.messages} />
+        <MessageList
+          messages={this.state.messages}
+          userColor={this.state.userColor}
+        />
         <ChatBar
           user={this.state.currentUser.name}
           onNewPost={this.onNewPost}

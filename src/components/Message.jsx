@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+const randomColor = require('randomcolor');
 
 class Message extends Component {
   constructor(props) {
@@ -6,6 +7,7 @@ class Message extends Component {
   }
 
   render() {
+    let userColor = { color: randomColor() };
     //if MESSAGE has username, post as message
     if (this.props.username) {
       return (
@@ -13,7 +15,9 @@ class Message extends Component {
           <div className='row message-rows'>
             <div className='col username-col'>
               <p className='username align-middle'>
-                <span className='username-style'>{this.props.username}</span>{" "}
+                <span className='username-style' style={userColor}>
+                  {this.props.username}
+                </span>{' '}
                 JUST SAID:
               </p>
             </div>
@@ -25,9 +29,8 @@ class Message extends Component {
           </div>
         </div>
       );
-    //if MESSAGE does not have a username, post as notification  
+      //if MESSAGE does not have a username, post as notification
     } else {
-
       return <div className='message system'> {this.props.content}</div>;
     }
   }

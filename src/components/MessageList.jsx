@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Message from './Message.jsx';
 
 class MessageList extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   // Automatically scrolls up messages when bottom is reached
   scrollToBottom() {
     this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
@@ -22,7 +26,7 @@ class MessageList extends Component {
             key={messages.id}
           />
         );
-      // If not MESSAGE, sends as NOTIFICATION
+        // If not MESSAGE, sends as NOTIFICATION
       } else {
         return <Message content={messages.content} key={messages.id} />;
       }
@@ -31,7 +35,7 @@ class MessageList extends Component {
       <main className='messages'>
         <div id='message-list'>{allMessages}</div>
         <div
-          // Checks to see if end of message box and scrolls up automatically 
+          // Checks to see if end of message box and scrolls up automatically
           ref={el => {
             this.messagesEnd = el;
           }}
