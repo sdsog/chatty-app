@@ -24,7 +24,10 @@ class ChatBar extends Component {
 
   onUsername(event) {
     this.setState({ previous_user: this.state.user });
-    if (this.state.previous_user !== event.target.value) {
+    if (
+      this.state.previous_user !== event.target.value &&
+      event.target.value !== ''
+    ) {
       this.setState({ user: event.target.value }, function() {
         this.props.onNameChange({
           type: 'postNotification',

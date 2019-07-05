@@ -31,7 +31,7 @@ class MessageList extends Component {
       <main className='messages'>
         <div id='message-list'>{allMessages}</div>
         <div
-          // Checks to see if end of message and scrolls up automatically 
+          // Checks to see if end of message box and scrolls up automatically 
           ref={el => {
             this.messagesEnd = el;
           }}

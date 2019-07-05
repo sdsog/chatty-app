@@ -58,6 +58,7 @@ wss.on('connection', socket => {
     }
   });
 
+  //When user connects, updates user count
   wss.broadcast(
     JSON.stringify({
       id: uuidv1(),
