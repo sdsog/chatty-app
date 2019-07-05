@@ -4,9 +4,9 @@
 
 Chatty App is a web-based chat SPA (Single Page Application) Slack clone built with ReactJS, Babel and WebPack allowing multiple users the ability to communicate in real-time via WebSockets—using Node package ws on the server-side, and native WebSocket on the client side.
 
-## Screenshots
+## Screenshot
 
-![Homepage](/screenshot/screenshot.jpg)
+![Homepage](./screenshot/screenshot.jpg)
 
 ## Getting Started
 
