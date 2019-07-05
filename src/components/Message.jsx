@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 // const randomColor = require('randomcolor');
 
 class Message extends Component {
@@ -18,7 +18,7 @@ class Message extends Component {
               <p className='username align-middle'>
                 <span className='username-style' style={userColorStyle}>
                   {this.props.username}
-                </span>{" "}
+                </span>{' '}
                 JUST SAID:
               </p>
             </div>

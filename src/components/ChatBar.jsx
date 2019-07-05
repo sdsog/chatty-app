@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-const randomColor = require("randomcolor");
+import React, { Component } from 'react';
+const randomColor = require('randomcolor');
 
 class ChatBar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      message: "",
-      user: "",
-      previousUser: "",
-      userColor: "",
-      previousUserColor: ""
+      message: '',
+      user: '',
+      previousUser: '',
+      userColor: '',
+      previousUserColor: ''
     };
 
     this.onNewMessage = this.onNewMessage.bind(this);
@@ -22,8 +22,7 @@ class ChatBar extends Component {
     this.setState({
       user: this.props.user,
       previousUser: this.props.user,
-      userColor: this.props.color,
-      previousUserColor: this.props.color
+      userColor: this.props.color
     });
   }
 
@@ -31,11 +30,11 @@ class ChatBar extends Component {
     this.setState({ previousUser: this.state.user });
     if (
       this.state.previousUser !== event.target.value &&
-      event.target.value !== ""
+      event.target.value !== ''
     ) {
       this.setState({ user: event.target.value }, function() {
         this.props.onNameChange({
-          type: "postNotification",
+          type: 'postNotification',
           content:
             '! "' +
             this.state.previousUser +
@@ -46,8 +45,8 @@ class ChatBar extends Component {
         this.setState({
           previousUser: this.state.user,
           userColor: randomColor({
-            luminosity: "bright",
-            format: "rgb"
+            luminosity: 'bright',
+            format: 'rgb'
           })
         });
       });
@@ -59,14 +58,14 @@ class ChatBar extends Component {
     this.setState({ previousUser: this.state.user });
     //checks to see if previous user does not equal the new name
     if (
-      event.key === "Enter" &&
+      event.key === 'Enter' &&
       this.state.previousUser !== event.target.value
     ) {
       //if previous user is unique
       this.setState({ user: event.target.value }, function() {
         // sends notification MessageList
         this.props.onNameChange({
-          type: "postNotification",
+          type: 'postNotification',
           content:
             '! "' +
             this.state.previousUser +
@@ -78,8 +77,8 @@ class ChatBar extends Component {
         this.setState({
           previousUser: this.state.user,
           userColor: randomColor({
-            luminosity: "bright",
-            format: "rgb"
+            luminosity: 'bright',
+            format: 'rgb'
           })
         });
       });
@@ -88,19 +87,18 @@ class ChatBar extends Component {
 
   onNewMessage(event) {
     // when user presses enter
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       // message created and value sent to App.jsx
       this.setState({ message: event.target.value }, function() {
         this.props.onNewPost({
-          type: "postMessage",
-          username: this.state.user || "Anonymous",
+          type: 'postMessage',
+          username: this.state.user || 'Anonymous',
           content: this.state.message,
           color: this.state.userColor
-          // color: this.state.user.color
         });
       });
       // resets message box to blank string
-      event.target.value = "";
+      event.target.value = '';
     }
   }
 
