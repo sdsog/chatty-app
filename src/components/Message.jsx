@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-const randomColor = require('randomcolor');
+import React, { Component } from "react";
+// const randomColor = require('randomcolor');
 
 class Message extends Component {
   constructor(props) {
@@ -7,17 +7,18 @@ class Message extends Component {
   }
 
   render() {
-    let userColor = { color: randomColor() };
     //if MESSAGE has username, post as message
     if (this.props.username) {
+      let userColor = this.props.color;
+      let userColorStyle = { color: userColor };
       return (
         <div>
-          <div className='row message-rows'>
+          <div className='row messatyge-rows'>
             <div className='col username-col'>
               <p className='username align-middle'>
-                <span className='username-style' style={userColor}>
+                <span className='username-style' style={userColorStyle}>
                   {this.props.username}
-                </span>{' '}
+                </span>{" "}
                 JUST SAID:
               </p>
             </div>

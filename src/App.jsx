@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
-import ChatBar from './components/ChatBar.jsx';
-import MessageList from './components/MessageList.jsx';
-import Header from './components/Header.jsx';
-const randomColor = require('randomcolor');
+import React, { Component } from "react";
+import ChatBar from "./components/ChatBar.jsx";
+import MessageList from "./components/MessageList.jsx";
+import Header from "./components/Header.jsx";
+const randomColor = require("randomcolor");
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentUser: { name: 'Anonymous' },
-      userColor: { color: randomColor() },
+      currentUser: { name: "Anonymous", color: "#303030" },
       messages: [],
       online: 0
     };
@@ -21,12 +20,12 @@ class App extends Component {
 
   componentDidMount() {
     //When APP mounts, creates new WebSocket connectio
-    this.socket = new WebSocket('ws://localhost:3001');
+    this.socket = new WebSocket("ws://localhost:3001");
     //handles incoming messages
     this.socket.onmessage = event => {
       const receivedMessage = JSON.parse(event.data);
       //updates online count for connected users
-      if ((receivedMessage.type = 'onlineStatus')) {
+      if ((receivedMessage.type = "onlineStatus")) {
         this.setState({ online: Number(receivedMessage.status) });
       }
       //upates messages with new posts
@@ -49,12 +48,10 @@ class App extends Component {
     return (
       <div>
         <Header online={this.state.online} />
-        <MessageList
-          messages={this.state.messages}
-          userColor={this.state.userColor}
-        />
+        <MessageList messages={this.state.messages} />
         <ChatBar
           user={this.state.currentUser.name}
+          color={this.state.currentUser.color}
           onNewPost={this.onNewPost}
           onNameChange={this.onNameChange}
         />

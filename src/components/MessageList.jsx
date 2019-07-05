@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Message from './Message.jsx';
+import React, { Component } from "react";
+import Message from "./Message.jsx";
 
 class MessageList extends Component {
   constructor(props) {
@@ -8,7 +8,7 @@ class MessageList extends Component {
 
   // Automatically scrolls up messages when bottom is reached
   scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
   // Checks to see if new messages are at the bottom of div with each new one posted
   componentDidUpdate() {
@@ -16,14 +16,16 @@ class MessageList extends Component {
   }
 
   render() {
+
     const allMessages = this.props.messages.map(function(messages) {
       // If message is incoming, sends data to MESSAGE Component
-      if ((messages.type = 'incomingMessage')) {
+      if ((messages.type = "incomingMessage")) {
         return (
           <Message
             username={messages.username}
             content={messages.content}
             key={messages.id}
+            color={messages.color}
           />
         );
         // If not MESSAGE, sends as NOTIFICATION

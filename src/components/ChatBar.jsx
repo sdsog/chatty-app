@@ -9,7 +9,8 @@ class ChatBar extends Component {
       message: "",
       user: "",
       previousUser: "",
-      userColor: ""
+      userColor: "",
+      previousUserColor: ""
     };
 
     this.onNewMessage = this.onNewMessage.bind(this);
@@ -21,7 +22,8 @@ class ChatBar extends Component {
     this.setState({
       user: this.props.user,
       previousUser: this.props.user,
-      userColor: randomColor()
+      userColor: this.props.color,
+      previousUserColor: this.props.color
     });
   }
 
@@ -43,7 +45,10 @@ class ChatBar extends Component {
         });
         this.setState({
           previousUser: this.state.user,
-          userColor: randomColor()
+          userColor: randomColor({
+            luminosity: "bright",
+            format: "rgb"
+          })
         });
       });
     }
@@ -72,7 +77,10 @@ class ChatBar extends Component {
         // sets previous user to new user value to prevent multiple changes of same value
         this.setState({
           previousUser: this.state.user,
-          userColor: randomColor()
+          userColor: randomColor({
+            luminosity: "bright",
+            format: "rgb"
+          })
         });
       });
     }
@@ -86,7 +94,9 @@ class ChatBar extends Component {
         this.props.onNewPost({
           type: "postMessage",
           username: this.state.user || "Anonymous",
-          content: this.state.message
+          content: this.state.message,
+          color: this.state.userColor
+          // color: this.state.user.color
         });
       });
       // resets message box to blank string

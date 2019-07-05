@@ -37,3 +37,4 @@ Chatty App is a web-based chat SPA (Single Page Application) Slack clone built w
 - webpack
 - webpack-dev-server
 - ws
+- randomColor
