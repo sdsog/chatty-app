@@ -3,26 +3,22 @@
 const express = require('express');
 const WebSocket = require('ws');
 const SocketServer = require('ws').Server;
+// For unique ID generation
 const uuidv1 = require('uuid/v1');
 
-// Set the port to 3001
 const PORT = 3001;
 
-// Create a new express server
+// New Server
 const server = express()
-  // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () =>
     console.log(`Listening on ${PORT}`)
   );
 
-// Create the WebSockets server
+// New Web Socket
 const wss = new SocketServer({ server });
 
-// Set up a callback that will run when a client connects to the server
-// When a client connects they are assigned a socket, represented by
-// the ws parameter in the callback.
-
+// Connects websocket to all connected and ready clients
 wss.on('connection', socket => {
   wss.broadcast = function broadcast(data) {
     wss.clients.forEach(function each(client) {
@@ -31,9 +27,12 @@ wss.on('connection', socket => {
       }
     });
   };
-  
+
+  // Parses incoming messages and notications
   socket.on('message', function incoming(message) {
     const incomingMessage = JSON.parse(message);
+
+    // If MESSAGES, assigns unique ID, then broadcasts to all connected clients and checks connected user count
     if ((incomingMessage.type = 'postMessage')) {
       incomingMessage.id = uuidv1();
       incomingMessage.type = 'incomingMessage';
@@ -45,6 +44,7 @@ wss.on('connection', socket => {
           status: wss.clients.size
         })
       );
+      // If NOTIFICATION, assigns unique ID and broadcasts to all connected clients and checks connected user count
     } else {
       incomingMessage.type = 'incomingNotification';
       wss.broadcast(JSON.stringify(incomingMessage));

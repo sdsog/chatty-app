@@ -5,10 +5,8 @@ class Message extends Component {
     super(props);
   }
 
-
-  
-
   render() {
+    //if MESSAGE has username, post as message
     if (this.props.username) {
       return (
         <div>
@@ -27,7 +25,9 @@ class Message extends Component {
           </div>
         </div>
       );
+    //if MESSAGE does not have a username, post as notification  
     } else {
+
       return <div className='message system'> {this.props.content}</div>;
     }
   }

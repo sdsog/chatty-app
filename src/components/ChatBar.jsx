@@ -1,16 +1,16 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class ChatBar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      message: "",
-      user: "",
-      previous_user: ""
+      message: '',
+      user: '',
+      previous_user: ''
     };
 
-    this.onPost = this.onPost.bind(this);
+    this.onNewMessage = this.onNewMessage.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
     this.onUsername = this.onUsername.bind(this);
   }
@@ -27,7 +27,7 @@ class ChatBar extends Component {
     if (this.state.previous_user !== event.target.value) {
       this.setState({ user: event.target.value }, function() {
         this.props.onNameChange({
-          type: "postNotification",
+          type: 'postNotification',
           content:
             '! "' +
             this.state.previous_user +
@@ -45,14 +45,14 @@ class ChatBar extends Component {
     this.setState({ previous_user: this.state.user });
     //checks to see if previous user does not equal the new name
     if (
-      event.key === "Enter" &&
+      event.key === 'Enter' &&
       this.state.previous_user !== event.target.value
     ) {
       //if previous user is unique
       this.setState({ user: event.target.value }, function() {
         // sends notification MessageList
         this.props.onNameChange({
-          type: "postNotification",
+          type: 'postNotification',
           content:
             '! "' +
             this.state.previous_user +
@@ -66,19 +66,19 @@ class ChatBar extends Component {
     }
   }
 
-  onPost(event) {
+  onNewMessage(event) {
     // when user presses enter
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       // message created and value sent to App.jsx
       this.setState({ message: event.target.value }, function() {
         this.props.onNewPost({
-          type: "postMessage",
-          username: this.state.user || "Anonymous",
+          type: 'postMessage',
+          username: this.state.user || 'Anonymous',
           content: this.state.message
         });
       });
       // resets message box to blank string
-      event.target.value = "";
+      event.target.value = '';
     }
   }
 
@@ -90,7 +90,7 @@ class ChatBar extends Component {
             <input
               placeholder='Type a message and hit ENTER'
               className='message-box form-control'
-              onKeyPress={this.onPost}
+              onKeyPress={this.onNewMessage}
             />
           </div>
           <div className='form-group'>

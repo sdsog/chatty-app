@@ -15,24 +15,32 @@ class App extends Component {
 
     this.onNewPost = this.onNewPost.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
+
   }
 
+  
   componentDidMount() {
+    //When APP mounts, creates new WebSocket connectio
     this.socket = new WebSocket('ws://localhost:3001');
+    //handles incoming messages
     this.socket.onmessage = event => {
       const receivedMessage = JSON.parse(event.data);
+      //updates online count for connected users 
       if ((receivedMessage.type = 'onlineStatus')) {
         this.setState({ online: Number(receivedMessage.status) });
       }
+      //upates messages with new posts
       const newMessage = this.state.messages.concat(receivedMessage);
       this.setState({ messages: newMessage });
     };
   }
 
+  //sends posted MESSAGES to websocket for broadcast
   onNewPost(content) {
     this.socket.send(JSON.stringify(content));
   }
 
+  //sends NAME update to websocket for broadcast
   onNameChange(content) {
     this.socket.send(JSON.stringify(content));
   }
